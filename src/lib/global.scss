@@ -12,18 +12,6 @@ main {
     margin: auto;
     margin-top: 20px;
 
-    input {
-        width: 100%;
-        font-size: 3.5rem;
-        margin-bottom: 10px;
-        color: green;
-        background-color: black;
-        text-align: right;
-        padding: 10px 4px 10px 4px;
-        font-family: lcd;
-        border: 1px solid yellow;
-        border-radius: 4px;
-    }
 }
 
 html {
@@ -31,36 +19,3 @@ html {
     background-color: black;
 }
 
-#keyBoard {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    padding: 10px;
-}
-
-button {
-    height: 80px;
-    border-radius: 5px;
-    font-size: 40px;
-    color: black;
-    background-color: rgb(224, 224, 224);
-    cursor: pointer;
-
-    :hover {
-        background-color: rgb(198, 198, 198);
-    }
-}
-
-#add,
-#sub,
-#mul,
-#div,
-#comma,
-#enter,
-#clear {
-    color: rgb(72, 209, 255);
-}
-
-#clear {
-    width: 100%;
-}
