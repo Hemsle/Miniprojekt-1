@@ -1,6 +1,7 @@
+<!--+layout.svelte-->
 <script>
 	import favicon from '$lib/assets/favicon.svg';
-	import global from "$lib/global.scss";
+	import '$lib/global.scss';
 
 	let { children } = $props();
 </script>

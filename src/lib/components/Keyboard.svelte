@@ -1,36 +1,38 @@
+<!--Keyboard.svelte-->
 <script>
-    export let addDigit;
-    export let addComma;
-    export let setOperator;
-    export let calculate;
-    export let clear;
+    let { keyDown } = $props();
 </script>
 
-<section id="keyBoard">
-    <button on:click={() => addDigit("7")}>7</button>
-    <button on:click={() => addDigit("8")}>8</button>
-    <button on:click={() => addDigit("9")}>9</button>
-    <button class="action" on:click={() => setOperator("+")}>+</button>
+<main>
+    <section id="keyBoard">
+        <button onclick={keyDown} value="7">7</button>
+        <button onclick={keyDown} value="8">8</button>
+        <button onclick={keyDown} value="9">9</button>
+        <button class="action" onclick={keyDown} value="+">+</button>
 
-    <button on:click={() => addDigit("4")}>4</button>
-    <button on:click={() => addDigit("5")}>5</button>
-    <button on:click={() => addDigit("6")}>6</button>
-    <button class="action" on:click={() => setOperator("-")}>-</button>
+        <button onclick={keyDown} value="4">4</button>
+        <button onclick={keyDown} value="5">5</button>
+        <button onclick={keyDown} value="6">6</button>
+        <button class="action" onclick={keyDown} value="-">-</button>
 
-    <button on:click={() => addDigit("1")}>1</button>
-    <button on:click={() => addDigit("2")}>2</button>
-    <button on:click={() => addDigit("3")}>3</button>
-    <button class="action" on:click={() => setOperator("x")}>x</button>
+        <button onclick={keyDown} value="1">1</button>
+        <button onclick={keyDown} value="2">2</button>
+        <button onclick={keyDown} value="3">3</button>
+        <button class="action" onclick={keyDown} value="*">x</button>
 
-    <button class="action" on:click={() => addComma()}>,</button>
-    <button on:click={() => addDigit("0")}>0</button>
-    <button on:click={() => calculate()}>=</button>
-    <button class="action" on:click={() => setOperator("/")}>/</button>
+        <button class="action" onclick={keyDown} value=",">,</button>
+        <button onclick={keyDown} value="0">0</button>
+        <button onclick={keyDown} value="=">=</button>
+        <button class="action" onclick={keyDown} value="/">/</button>
 
-    <button id="clear" style="grid-column: span 4;" on:click={() => clear}
-        >CLEAR</button
-    >
-</section>
+        <button
+            id="clear"
+            style="grid-column: span 4;"
+            onclick={keyDown}
+            value="ac">CLEAR</button
+        >
+    </section>
+</main>
 
 <style lang="scss">
     #keyBoard {

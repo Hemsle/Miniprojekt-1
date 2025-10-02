@@ -1,8 +1,24 @@
+<!--+page.svelte-->
 <script>
-    import Display from "$lib/components/Display.svelte";
     import Keyboard from "$lib/components/Keyboard.svelte";
 
-    let value = ""; // displayen
+    let display = $state("");
+    function keyDown(e) {
+        console.log(e.target.value);
+
+        let val = e.target.value; // Knappens value-värde
+        if (val === "ac") {
+            memClear();
+        } else if (Number(val) >= 0 && Number(val) < 10) {
+            addDigit(val);
+        } else if (val == "+" || val == "-" || val == "/" || val == "*") {
+            setOperator(val);
+        } else if (val == ",") {
+            addComma();
+        } else {
+            calculate()
+        }
+    }
 
     let memory = 0; // Lagrat/gamlat värdet från display
     let arithmetic = null; // Vilken beräkning som skall göras +,-, x eller /
@@ -17,7 +33,9 @@
             clear();
             isResult = false;
         }
-        value += digit;
+        display += digit;
+
+        console.log(display);
     }
 
     /**
@@ -26,60 +44,63 @@
     function addComma() {
         if (!isComma) {
             //hindrar dubbla komman
-            value += ".";
+            display += ".";
             isComma = true;
         }
     }
 
     function setOperator(operator) {
         arithmetic = operator;
-        if (!isNaN(parseFloat(value))) {
-            memory = parseFloat(value);
+        if (!isNaN(parseFloat(display))) {
+            memory = parseFloat(display);
         }
         clear();
     }
 
     function calculate() {
+        if(display === ""){
+            return;//om inget är skrivet
+        }
+
+        let current = parseFloat(display);
         let result;
-        console.log(arithmetic);
 
         switch (arithmetic) {
             case "+":
-                result = memory + value;
+                result = memory + current;
                 break;
             case "-":
-                result = memory - value;
+                result = memory - current;
                 break;
             case "/":
-                if (value === "0") {
+                if (current === 0) {
                     /** hindrar division med noll att bli infinity */
-                    value = "undefined";
+                    result = "undefined";
+                    isResult = true;
                 } else {
-                    result = memory / value;
+                    result = memory / current;
                 }
                 break;
             case "*":
-                result = memory * value;
+                result = memory * current;
                 break;
             case null:
-                result = value;
+                result = current;
                 break;
         }
 
         arithmetic = null;
-        if (value === "") {
-            value = memory;
+        if (display === "") {
+            display = memory;
             isResult = true; /** lagrar att det finns ett resultat */
-            console.log(memory + " " + isResult);
         } else {
-            value = result;
+            display = result;
             isResult = true;
-            console.log(result + " " + isResult);
         }
     }
 
     function clear() {
-        value = "";
+        display = "";
         isComma = false;
     }
 
@@ -89,8 +110,6 @@
         arithmetic = null;
         clear();
     }
-
-
 </script>
 
 <svelte:head>
@@ -98,15 +117,9 @@
 </svelte:head>
 
 <main>
-    <!-- Display får value -->
-    <Display {value} />
-
-    <!-- Keyboard får alla funktioner -->
-    <Keyboard 
-        {addDigit} 
-        {addComma} 
-        {setOperator} 
-        {calculate} 
-        {clear} 
-    />
+    <legend>KeyBoard</legend>
+    <input type="text" value={display} disabled/>
 </main>
+
+<Keyboard {keyDown}></Keyboard>
+
